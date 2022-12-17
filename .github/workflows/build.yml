@@ -11,7 +11,7 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: install dependencies
-              run: apt update && apt install -y firefox
+              run: sudo apt update && sudo apt install -y firefox
             - uses: actions-rs/toolchain@v1
               with:
                   toolchain: stable
