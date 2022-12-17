@@ -1,0 +1,30 @@
+[package]
+name = "rust-wasm-app"
+version = "0.1.0"
+authors = ["veeso <christian.visintin1997@gmail.com>"]
+edition = "2021"
+description = ""
+repository = "https://github.com/veeso/rust-wasmp-app"
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = [ ]
+development = [ "console_error_panic_hook" ]
+
+[dependencies]
+wasm-bindgen = "^0.2"
+console_error_panic_hook = { version = "^0.1", optional = true }
+# `wee_alloc` is a tiny allocator for wasm that is only ~1K in code size
+# compared to the default allocator's ~10K. It is slower than the default
+# allocator, however.
+wee_alloc = { version = "^0.4", optional = true }
+
+[dev-dependencies]
+pretty_assertions = "^1"
+wasm-bindgen-test = "^0.3"
+
+[profile.release]
+opt-level = "s"

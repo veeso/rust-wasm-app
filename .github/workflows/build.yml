@@ -1,0 +1,35 @@
+name: Build
+
+on: [push, pull_request]
+
+env:
+    CARGO_TERM_COLOR: always
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: install dependencies
+              run: apt update && apt install -y firefox
+            - uses: actions-rs/toolchain@v1
+              with:
+                  toolchain: stable
+                  override: true
+                  components: rustfmt, clippy
+            - uses: jetli/wasm-pack-action@v0.4.0
+              with:
+                  version: "latest"
+            - name: Pack
+              run: wasm-pack build
+            - name: Run tests
+              uses: actions-rs/cargo@v1
+              with:
+                  command: test
+                  args: --no-fail-fast
+            - name: Run wasm tests
+              run: wasm-pack test --firefox --headless
+            - name: Format
+              run: cargo fmt --all -- --check
+            - name: Clippy
+              run: cargo clippy -- -Dwarnings
