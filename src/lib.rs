@@ -1,5 +1,5 @@
 #[cfg(feature = "console_error_panic_hook")]
-mod utils;
+mod panic;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
